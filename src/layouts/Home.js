@@ -15,10 +15,10 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Component, useEffect } from "react";
+import React, { Component } from "react";
 import { useLocation, Route, Switch } from "react-router-dom";
 
-import AdminNavbar from "components/Navbars/AdminNavbar";
+import UserNavBar from "components/Navbars/UserNavBar";
 import Footer from "components/Footer/Footer";
 import Sidebar from "components/Sidebar/Sidebar";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
@@ -26,9 +26,8 @@ import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 import routes from "routes.js";
 
 import sidebarImage from "assets/img/sidebar-3.jpg";
-import { history } from "index"
 
-function Admin() {
+export default function Home() {
   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
   const [hasImage, setHasImage] = React.useState(true);
@@ -36,12 +35,11 @@ function Admin() {
   const mainPanel = React.useRef(null);
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin" || prop.layout === "") {
+      if (prop.layout === "/home") {
         return (
-          <Route exact
-            path={"/admin" + prop.path}
-            render={(props) => <prop.component {...props} />
-            }
+          <Route
+            path={prop.path}
+            render={(props) => <prop.component {...props} />}
             key={key}
           />
         );
@@ -51,6 +49,7 @@ function Admin() {
     });
   };
   React.useEffect(() => {
+    console.log(color, 'color');
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainPanel.current.scrollTop = 0;
@@ -63,18 +62,12 @@ function Admin() {
       element.parentNode.removeChild(element);
     }
   }, [location]);
-  console.log(location.pathname, "admin");
-  if (location.pathname === "/admin/") {
-    console.log(location.pathname, "admin");
-    history.push("/admin/dashboard")
-  }
-
   return (
     <>
       <div className="wrapper">
         <Sidebar color={color} image={hasImage ? image : ""} routes={routes} />
         <div className="main-panel" ref={mainPanel}>
-          <AdminNavbar />
+          <UserNavBar />
           <div className="content">
             <Switch>{getRoutes(routes)}</Switch>
           </div>
@@ -93,4 +86,3 @@ function Admin() {
   );
 }
 
-export default Admin;

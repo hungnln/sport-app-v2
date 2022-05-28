@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // react-bootstrap components
 import {
@@ -12,7 +12,7 @@ import {
   Col,
 } from "react-bootstrap";
 
-function Icons() {
+function Icons(props) {
   return (
     <>
       <Container fluid>

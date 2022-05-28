@@ -22,9 +22,11 @@ import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
 import routes from "routes.js";
 import Notifications from "views/Notifications";
 import { toastr } from "react-redux-toastr";
+import { useSelector } from "react-redux";
+import { history } from "index";
 
 function Header() {
-  const [component, setComponent] = useState("")
+  const { userLogin } = useSelector(rootReducer => rootReducer.UserManageReducer)
   const location = useLocation();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
@@ -40,12 +42,15 @@ function Header() {
 
   const getBrandText = () => {
     for (let i = 0; i < routes.length; i++) {
-      if (location.pathname.indexOf(routes[i].path) !== -1) {
+      if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
         return routes[i].name;
       }
     }
     return "Brand";
   };
+  if (userLogin.role !== "user") {
+    history.push("/admin")
+  }
   return (
     <Fragment>
       <Navbar bg="light" expand="lg">
@@ -216,12 +221,14 @@ function Header() {
                   href="#pablo"
                   onClick={(e) => e.preventDefault()}
                 >
+
                 </Nav.Link>
               </Nav.Item>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
     </Fragment>
 
   );

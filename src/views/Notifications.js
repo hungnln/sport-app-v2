@@ -15,11 +15,12 @@ import {
   Col,
 } from "react-bootstrap";
 
-function Notifications() {
+function Notifications(props) {
+  const { place, color, message } = props
   const [showModal, setShowModal] = React.useState(false);
   const notificationAlertRef = React.useRef(null);
-  const notify = (place) => {
-    var color = Math.floor(Math.random() * 5 + 1);
+  const notify = (place, color, message) => {
+    var color;
     var type;
     switch (color) {
       case 1:
@@ -46,8 +47,7 @@ function Notifications() {
       message: (
         <div>
           <div>
-            Welcome to <b>Light Bootstrap Dashboard React</b> - a beautiful
-            freebie for every web developer.
+            {message}
           </div>
         </div>
       ),
@@ -232,7 +232,7 @@ function Notifications() {
               </Row>
               <Row className="justify-content-center">
                 <Col lg="3" md="3">
-                  <Button block onClick={() => notify("tl")} variant="default">
+                  <Button block onClick={() => notify("tl", 2, "Login success")} variant="default">
                     Top Left
                   </Button>
                 </Col>

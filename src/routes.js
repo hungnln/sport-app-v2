@@ -23,6 +23,12 @@ import Icons from "views/Icons.js";
 import Maps from "views/Maps.js";
 import Notifications from "views/Notifications.js";
 import Upgrade from "views/Upgrade.js";
+import Login from "views/Login/Login";
+import Club from "views/Club/Club";
+import Player from "views/Player/Player";
+import StadiumList from "views/Stadium/StadiumList";
+import Tournament from "views/Tournament/Tournament";
+
 
 const dashboardRoutes = [
   // {
@@ -34,19 +40,20 @@ const dashboardRoutes = [
   //   layout: "/admin",
   // },
   {
-    path: "/dashboard",
+    path: "",
     name: "Dashboard",
-    // icon: "nc-icon nc-chart-pie-35",
+    icon: "fa-regular fa-house",
     component: Dashboard,
     layout: "/admin",
+    title: "Dasboard"
   },
-  {
-    path: "/user",
-    name: "User Profile",
-    icon: "nc-icon nc-circle-09",
-    component: UserProfile,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/user",
+  //   name: "User Profile",
+  //   icon: "nc-icon nc-circle-09",
+  //   component: UserProfile,
+  //   layout: "/admin",
+  // },
   {
     path: "/table",
     name: "Table List",
@@ -55,39 +62,74 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-paper-2",
-    component: Typography,
-    layout: "/admin",
+    path: "/tournament",
+    name: "Tournament",
+    icon: "nc-icon nc-notes",
+    component: Tournament,
+    layout: "",
   },
+  // {
+  //   path: "/typography",
+  //   name: "Typography",
+  //   icon: "nc-icon nc-paper-2",
+  //   component: Typography,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   icon: "nc-icon nc-atom",
+  //   component: Icons,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "nc-icon nc-pin-3",
+  //   component: Maps,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   icon: "nc-icon nc-bell-55",
+  //   component: Notifications,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/login",
+  //   name: "Test modal",
+  //   icon: "nc-icon nc-bell-55",
+  //   component: Login,
+  //   layout: "/",
+  // },
+  // {
+  //   path: "/notifications",
+  //   name: "User",
+  //   icon: "nc-icon nc-bell-55",
+  //   component: Notifications,
+  //   layout: "/user",
+  // },
   {
-    path: "/icons",
-    name: "Icons",
-    icon: "nc-icon nc-atom",
-    component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/admin",
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
+    path: "/club",
+    name: "Clubs",
     icon: "nc-icon nc-bell-55",
-    component: Notifications,
-    layout: "/admin",
+    component: Club,
+    layout: "",
   },
   {
-    path: "/notifications",
-    name: "User",
+    path: "/player",
+    name: "Players",
     icon: "nc-icon nc-bell-55",
-    component: Notifications,
-    layout: "/user",
+    component: Player,
+    layout: "",
+  },
+  {
+    path: "/stadium",
+    name: "Stadiums",
+    icon: "nc-icon nc-bell-55",
+    component: StadiumList,
+    layout: "",
   },
 ];
 
