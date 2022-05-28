@@ -21,12 +21,26 @@ import { useLocation, NavLink } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
 import logo from "assets/img/reactlogo.png";
+import { useSelector } from "react-redux";
 
 function Sidebar({ color, image, routes }) {
-  const [role, setRole] = useState("/admin")
+  const { userLogin } = useSelector(rootReducer => rootReducer.UserManageReducer)
+  const role = "/" + userLogin.role
+  // const [role, setRole] = useState(userLogin.role)
+  // const [role, setRole] = useState("/admin")
   const location = useLocation();
   const activeRoute = (routeName) => {
-    return location.pathname.indexOf(routeName) > -1 ? "active" : "";
+    if (location.pathname === role) {
+      return routeName === "" ? "active" : ""
+    } else {
+      if (routeName === "") {
+        return ""
+      } else {
+        return location.pathname.indexOf(routeName) > -1 ? "active" : "";
+
+      }
+    }
+    // return location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
   return (
     <div className="sidebar" data-image={image} data-color={color}>
@@ -37,37 +51,38 @@ function Sidebar({ color, image, routes }) {
         }}
       />
       <div className="sidebar-wrapper">
-        <div className="logo d-flex align-items-center justify-content-start">
-          <a
-            href="https://www.creative-tim.com?ref=lbd-sidebar"
-            className="simple-text logo-mini mx-1"
+        <div className="logo d-flex flex-wrap flex-column align-items-center justify-content-center">
+          <NavLink
+            to={"#"}
+            className="simple-text  mx-1"
           >
             <div className="logo-img">
               <img
-                src={require("assets/img/reactlogo.png").default}
+                src={"/images/logo.png"}
                 alt="..."
               />
             </div>
-          </a>
-          <a className="simple-text" href="http://www.creative-tim.com">
+          </NavLink>
+          <div>hello</div>
+          {/* <a className="simple-text" href="http://www.creative-tim.com">
             Creative Tim
-          </a>
+          </a> */}
         </div>
         <Nav>
+          <li>Dashboard</li>
           {routes.map((prop, key) => {
-            console.log(role);
-            if (!prop.redirect && prop.layout === role)
+            if (!prop.redirect && (prop.layout === role | prop.layout === ""))
               return (
                 <li
                   className={
                     prop.upgrade
                       ? "active active-pro"
-                      : activeRoute(prop.layout + prop.path)
+                      : activeRoute(prop.path)
                   }
                   key={key}
                 >
                   <NavLink
-                    to={prop.layout + prop.path}
+                    to={role + prop.path}
                     className="nav-link"
                     activeClassName="active"
                   >
@@ -80,7 +95,7 @@ function Sidebar({ color, image, routes }) {
           })}
         </Nav>
       </div>
-    </div>
+    </div >
   );
 }
 

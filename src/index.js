@@ -18,22 +18,53 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect, Router } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/animate.min.css";
 import "./assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0";
 import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
+import Admin from "layouts/Admin.js";
+import { Provider } from 'react-redux'
+import { store } from './redux/configStore'
+import ReduxToastr from "react-redux-toastr";
+import Login from "views/Login/Login";
+import "./form.scss"
+import "./index.scss"
+import { createBrowserHistory } from "history";
+import Register from "views/Register/Register";
+import User from "layouts/User";
+import { AdminTemplate } from "layouts/AdminTemplate";
+import Icons from "views/Icons";
 
-import AdminLayout from "layouts/Admin.js";
-
+export const history = createBrowserHistory();
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Redirect from="/" to="/admin/dashboard" />
-    </Switch>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <Router history={history}>
+      <Switch>
+        <Route path="/admin" render={(props) => <Admin {...props} />} />
+        <Redirect from="/admin" exact to="/admin/dashboard" />
+        <Route path="/user" render={(props) => <User {...props} />} />
+        {/* <AdminTemplate path="/icons" exact Component={Icons} /> */}
+        <Redirect from="/" to="/admin/dashboard" />
+        <Route path="/login" render={(props) => <Login {...props} />} />
+        <Route path="/register" render={(props) => <Register {...props} />} />
+
+      </Switch>
+    </Router>
+    <ReduxToastr
+      timeOut={4000}
+      newestOnTop={true}
+      // preventDuplicates
+      position="top-right"
+      getState={(state) => state.toastr} // This is the default
+      transitionIn="fadeIn"
+      transitionOut="fadeOut"
+      // progressBar
+      closeOnToastrClick />
+  </Provider>
+  ,
   document.getElementById("root")
 );
