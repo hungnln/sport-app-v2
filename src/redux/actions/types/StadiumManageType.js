@@ -1,0 +1,1 @@
+export const GET_LIST_STADIUMS = "GET_LIST_STADIUMS"

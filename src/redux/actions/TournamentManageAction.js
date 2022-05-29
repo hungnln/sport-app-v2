@@ -1,3 +1,5 @@
+import { toastr } from "react-redux-toastr";
+import { http } from "utils/setting";
 import { GET_LIST_TOURNAMENTS } from "./types/TournamentManageType";
 
 export const getListTournamentsAction = (PageNumber) => {
@@ -18,14 +20,14 @@ export const getListTournamentsAction = (PageNumber) => {
         }
     }
 }
-export const createNewTourNamentAction = (data) => {
+export const createNewTournamentAction = (data) => {
     return async dispatch => {
         try {
             let result = await http.post('/api/tournaments', data)
             if (result.data.statusCode === 200) {
                 toastr.success('Create new tournament success')
                 dispatch(getListTournamentsAction())
-                $(`#createPlayerModal`).modal('hide')
+                $(`#myModal`).modal('hide')
             }
         } catch (error) {
             console.log({ error });
@@ -40,7 +42,7 @@ export const updateTournamentAction = (tournamentID, data) => {
             if (result.data.statusCode === 200) {
                 toastr.success('Update tournament success')
                 dispatch(getListTournamentsAction())
-                $(`#updatePlayerModal${tournamentID}`).modal('hide')
+                $(`#myModal`).modal('hide')
                 // message('Login Success', SUCCESS).then((value) => { history.goBack(); });
             }
         } catch (error) {
@@ -56,11 +58,12 @@ export const deleteTournamentAction = (tournamentID) => {
             let result = await http.delete(`/api/tournaments/${tournamentID}`)
             toastr.success('Delete tournament success')
             dispatch(getListTournamentsAction())
-            $(`#deletePlayerModal${tournamentID}`).modal('hide')
+            $(`#myModal`).modal('hide')
+
             // message('Login Success', SUCCESS).then((value) => { history.goBack(); });
         } catch (error) {
             toastr.error(error.response.data.Message)
-            $(`#deletePlayerModal${tournamentID}`).modal('hide')
+            $(`#myModal`).modal('hide')
             // message(error.response.data.content, WARNING)
         }
     }
