@@ -15,19 +15,19 @@ import {
 } from "react-bootstrap";
 import CreateStadium from './CreateStadium';
 import { useDispatch, useSelector } from 'react-redux';
-import { getListCLubAction } from 'redux/actions/ClubManageAction';
 import UpdateStadium from './UpdateStadium';
 import DeleteStadium from './DeleteStadium';
 import Modal from 'components/Modal/Modal';
 import { OPEN_MODAL } from 'redux/actions/types/ModalType';
+import { getListStadiumsAction } from 'redux/actions/StadiumManageAction';
 export default function Stadium() {
-  const { listStadiums, pagination } = useSelector(rootReducer => rootReducer.ClubManageReducer)
+  const { listStadiums, pagination } = useSelector(rootReducer => rootReducer.StadiumManageReducer)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getListCLubAction())
+    dispatch(getListStadiumsAction())
   }, [])
   const callbackFunction = useCallback((pageNumber) => {
-    dispatch(getListCLubAction(pageNumber))
+    dispatch(getListStadiumsAction(pageNumber))
   }, [])
   const renderStadium = () => {
     return <Fragment>
@@ -38,14 +38,14 @@ export default function Stadium() {
               onClick={() => {
                 const action = {
                   type: OPEN_MODAL,
-                  headingName: 'Create new club',
+                  headingName: 'Create new stadium',
                   component: <CreateStadium />
                 }
                 dispatch(action)
               }}>
               Create new stadium
             </button>
-            <Card.Title as="h4">Clubs List </Card.Title>
+            <Card.Title as="h4">Stadium List </Card.Title>
             <p className="card-category">
               Here is a subtitle for this table
             </p>
@@ -67,7 +67,7 @@ export default function Stadium() {
                     <td>{stadium.id}</td>
                     <td>{stadium.name}</td>
                     <td>{stadium.address}</td>
-                    <td>{stadium.imageURL}</td>
+                    <td>{stadium.imageUrl}</td>
                     <td className='d-flex'>
                       <button type="button" style={{ border: 'none', background: 'transparent' }} data-toggle="modal" data-target="#myModal"
                         onClick={() => {
