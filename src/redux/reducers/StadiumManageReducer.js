@@ -1,16 +1,16 @@
-import { GET_LIST_TOURNAMENTS } from "redux/actions/types/TournamentManageType"
+import { GET_LIST_STADIUMS } from "redux/actions/types/StadiumManageType"
 
 const initialState = {
-    listTournaments: [],
+    listStadiums: [],
     pagination: {},
-    modalTournament: {}
+
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
 
-        case GET_LIST_TOURNAMENTS:
-            state.listTournaments = action.listTournaments
+        case GET_LIST_STADIUMS:
+            state.listStadiums = action.listStadiums
             state.pagination = action.pagination
             return { ...state }
 

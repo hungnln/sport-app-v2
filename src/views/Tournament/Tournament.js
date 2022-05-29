@@ -1,6 +1,7 @@
 import Pagination from 'components/Pagination/Pagination';
 import _ from 'lodash';
 import React, { Fragment, useCallback, useEffect } from 'react'
+import moment from 'moment';
 import {
     Badge,
     Button,
@@ -15,6 +16,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { getListTournamentsAction } from 'redux/actions/TournamentManageAction';
 import CreateTournament from './CreateTournament';
+import { OPEN_MODAL } from 'redux/actions/types/ModalType';
+import Modal from 'components/Modal/Modal';
+import UpdateTournament from './UpdateTournament';
+import DeleteTournament from './DeleteTournament';
 export default function Tournament() {
     const { listTournaments, pagination } = useSelector(rootReducer => rootReducer.TournamentManageReducer)
     const dispatch = useDispatch()
@@ -24,12 +29,22 @@ export default function Tournament() {
     const callbackFunction = useCallback((pageNumber) => {
         dispatch(getListTournamentsAction(pageNumber))
     }, [])
-    return (
-        <Fragment>
+    const renderTournament = () => {
+        return <Fragment>
             <Col md="12">
                 <Card className="strpied-tabled-with-hover">
                     <Card.Header>
-                        <CreateTournament />
+                        <button type="button" className="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"
+                            onClick={() => {
+                                const action = {
+                                    type: OPEN_MODAL,
+                                    headingName: 'Create new tournament',
+                                    component: <CreateTournament />
+                                }
+                                dispatch(action)
+                            }}>
+                            Create new tournament
+                        </button>
                         <Card.Title as="h4">Tournament List </Card.Title>
                         <p className="card-category">
                             Here is a subtitle for this table
@@ -51,12 +66,35 @@ export default function Tournament() {
                                     return <tr>
                                         <td>{tournament.id}</td>
                                         <td>{tournament.name}</td>
-                                        <td>Tiền đạo</td>
-                                        <td>
-                                            <img className='club__logo' src="//ssl.gstatic.com/onebox/media/sports/logos/RWDf-QvHoH_l50a-SLFQ7A_48x48.png" alt="Team Logo" />
-                                            <span className='club__name'>TP.HCM</span>
+                                        <td>{moment(tournament.from).format('DD/MM/yyyy')}</td>
+                                        <td>{moment(tournament.to).format('DD/MM/yyyy')}</td>
+                                        <td className='d-flex'>
+                                            <button type="button" style={{ border: 'none', background: 'transparent' }} data-toggle="modal" data-target="#myModal"
+                                                onClick={() => {
+                                                    const action = {
+                                                        type: OPEN_MODAL,
+                                                        headingName: `Edit ${tournament.name}`,
+                                                        component: <UpdateTournament {...tournament} />
+                                                    }
+                                                    dispatch(action)
+                                                }}
+                                            >
+                                                <i class='fas fa-edit'></i>
+                                            </button>
+                                            <button type="button" style={{ border: 'none', background: 'transparent' }} data-toggle="modal" data-target="#myModal"
+                                                onClick={() => {
+                                                    const action = {
+                                                        type: OPEN_MODAL,
+                                                        headingName: `Delete ${tournament.name}`,
+                                                        size: 'modal-sm',
+                                                        component: <DeleteTournament {...tournament} />
+                                                    }
+                                                    dispatch(action)
+                                                }}
+                                            >
+                                                <i class='fas fa-trash'></i>
+                                            </button>
                                         </td>
-                                        <td className='d-flex'></td>
                                     </tr>
                                 })}
                             </tbody>
@@ -64,9 +102,13 @@ export default function Tournament() {
                     </Card.Body>
                     <Pagination {...pagination} paginationCallBack={callbackFunction}></Pagination>
                 </Card>
-
             </Col>
-
+        </Fragment>
+    }
+    return (
+        <Fragment>
+            <div className='row'>{renderTournament()}</div>
+            <Modal />
         </Fragment>
     )
 }

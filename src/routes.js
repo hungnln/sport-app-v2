@@ -26,8 +26,8 @@ import Upgrade from "views/Upgrade.js";
 import Login from "views/Login/Login";
 import Club from "views/Club/Club";
 import Player from "views/Player/Player";
-import StadiumList from "views/Stadium/StadiumList";
 import Tournament from "views/Tournament/Tournament";
+import Stadium from "views/Stadium/Stadium";
 
 
 const dashboardRoutes = [
@@ -128,7 +128,7 @@ const dashboardRoutes = [
     path: "/stadium",
     name: "Stadiums",
     icon: "nc-icon nc-bell-55",
-    component: StadiumList,
+    component: Stadium,
     layout: "",
   },
 ];

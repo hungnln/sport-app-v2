@@ -5,13 +5,16 @@ import { reducer as toastrReducer } from 'react-redux-toastr'
 import ClubManageReducer from './reducers/ClubManageReducer';
 import PlayerManageReducer from './reducers/PlayerManageReducer';
 import TournamentManageReducer from './reducers/TournamentManageReducer';
+import ModalReducer from './reducers/ModalReducer';
+import StadiumManageReducer from './reducers/StadiumManageReducer';
 
 const rootReducer = combineReducers({
-    //Chứa state ứng dụng
     UserManageReducer,
     ClubManageReducer,
     PlayerManageReducer,
     TournamentManageReducer,
+    ModalReducer,
+    StadiumManageReducer,
     toastr: toastrReducer,
 
 });
