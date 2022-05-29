@@ -33,12 +33,12 @@ import ReduxToastr from "react-redux-toastr";
 import Login from "views/Login/Login";
 import "./form.scss"
 import "./index.scss"
+import "./select2.scss"
 import { createBrowserHistory } from "history";
 import Register from "views/Register/Register";
 import User from "layouts/User";
 import { AdminTemplate } from "layouts/AdminTemplate";
 import Icons from "views/Icons";
-
 export const history = createBrowserHistory();
 ReactDOM.render(
   <Provider store={store}>
@@ -64,7 +64,6 @@ ReactDOM.render(
       transitionOut="fadeOut"
       // progressBar
       closeOnToastrClick />
-  </Provider>
-  ,
+  </Provider>,
   document.getElementById("root")
 );

@@ -18,19 +18,20 @@ export default function CreateStadium() {
     onSubmit: values => {
       const errors = {}
       if (!values.Name) {
-        errors.Name = "Club name is required"
-        toastr.error("Club name is required")
+        errors.Name = "Stadium name is required"
+        toastr.error("Stadium name is required")
       }
-      if (!values.From) {
-        errors.Address = "Club address is required"
-        toastr.error("Club address is required")
+      if (!values.Address) {
+        errors.Address = "Stadium address is required"
+        toastr.error("Stadium address is required")
       }
-      if (!values.To) {
-        errors.ImageUrl = "Club image is required"
-        toastr.error("Club image is required")
+      if (!values.ImageUrl) {
+        errors.ImageUrl = "Stadium image is required"
+        toastr.error("Stadium image is required")
       }
       if (_.isEmpty(errors)) {
         dispatch(createNewStadiumAction(values))
+        formik.resetForm()
         console.log("value1", values);
       }
 
@@ -44,14 +45,13 @@ export default function CreateStadium() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.Name} />
-          <label htmlFor='Name' className='form__label'>Tournament Name</label>
+          <label htmlFor='Name' className='form__label'>  Name</label>
 
         </div>
 
 
         <div className='form form-group'>
           <input type="text" id="Address" className="form__input" autoComplete="off" placeholder=" "
-            max={formik.values.To}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.Address} />
@@ -62,7 +62,6 @@ export default function CreateStadium() {
 
         <div className='form form-group'>
           <input type="text" id="ImageUrl" className="form__input" autoComplete="off" placeholder=" "
-            min={formik.values.From}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.ImageUrl} />

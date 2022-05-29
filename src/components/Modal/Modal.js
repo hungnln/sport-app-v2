@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 export default function Modal() {
     const { headingName, component, size } = useSelector(rootReducer => rootReducer.ModalReducer)
     return (
-        <div className="modal" id="myModal">
+        <div className="modal" id="myModal" role="dialog">
             <div className={`modal-dialog ${size}`}>
                 <div className="modal-content">
                     {/* Modal Header */}

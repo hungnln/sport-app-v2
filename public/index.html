@@ -35,6 +35,7 @@
     integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
   <link href="toastr.css" rel="stylesheet" />
   <link href="%PUBLIC_URL%/lib/FontAwesome/css/all.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
   <!--
         Notice the use of %PUBLIC_URL% in the tags above.
@@ -69,6 +70,16 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
     crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.test').select2({
+        placeholder: "Select a state",
+        dropdownParent: $('#myModal')
+      });
+    });
+  </script>
 </body>
 
 </html>
