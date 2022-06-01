@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect, useCallback } from 'react'
 import moment from 'moment';
 import _, { values } from "lodash"
 import { toastr } from 'react-redux-toastr';
@@ -7,6 +7,7 @@ import ReactDatePicker from 'react-datepicker';
 import { UPDATE_MODAL_PLAYER } from 'redux/actions/types/PlayerManageType';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePlayer } from 'redux/actions/PlayerManageAction';
+import UploadFile from 'components/UploadFile/UploadFile';
 
 export default function UpdatePlayer(props) {
     const player = props;
@@ -17,6 +18,10 @@ export default function UpdatePlayer(props) {
     const [imageURL, setImageURL] = useState(player.imageURL);
     console.log(name, "modalPlayer");
     const dispatch = useDispatch()
+    const FileCallBackFunction = useCallback((fileBase64) => {
+        formik.setValues({ ...formik.values, ImageURL: fileBase64 })
+        console.log(fileBase64, "file createPlayer");
+    })
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -85,11 +90,13 @@ export default function UpdatePlayer(props) {
 
                                     </div>
                                     <div className='form form-group'>
-                                        <input type="text" id="ImageURL" className="form__input" autoComplete="off" placeholder=" "
+                                        {/* <input type="text" id="ImageURL" className="form__input" autoComplete="off" placeholder=" "
                                             onChange={(e) => setImageURL(e.target.value)}
                                             onBlur={formik.handleBlur}
                                             value={formik.values.ImageURL} />
-                                        <label htmlFor='Name' className='form__label'>Player Image</label>
+                                        <label htmlFor='Name' className='form__label'>Player Image</label> */}
+                                        <UploadFile getFileCallBack={FileCallBackFunction} className="form__input" file={imageURL} />
+
 
                                     </div>
                                     <div className='form form-group'>
