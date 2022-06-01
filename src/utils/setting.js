@@ -9,12 +9,9 @@ export const http = axios.create({
     timeout: 30000,
 
 })
-// http.defaults.headers.post['Content-Type'] = 'application/json';
 http.interceptors.request.use((config) => {
-    // config.headers.post['Content-Type'] = 'application/json';
     config.headers = {
         ...config.headers,
-        // ['Content-Type']: 'application/json'
         // ['']: "",
 
     }

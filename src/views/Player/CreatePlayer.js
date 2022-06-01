@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import DatePicker from "react-datepicker";
 import "./style.scss"
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,11 +8,16 @@ import { toastr } from 'react-redux-toastr';
 import _ from "lodash"
 import { useDispatch } from 'react-redux';
 import { createNewPlayerAction } from 'redux/actions/PlayerManageAction';
+import UploadFile from "components/UploadFile/UploadFile"
 export default function CreatePlayer() {
     const [startDate, setStartDate] = useState(new Date());
     const [name, setName] = useState("")
     const [imageURL, setImageURL] = useState("")
     const dispatch = useDispatch();
+    const FileCallBackFunction = useCallback((fileBase64) => {
+        formik.setValues({ ...formik.values, ImageURL: fileBase64 })
+        console.log(fileBase64, "file createPlayer");
+    })
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -27,13 +32,14 @@ export default function CreatePlayer() {
                 toastr.error("Player name is required")
             }
             if (!values.ImageURL) {
-                errors.Name = "Player image is required"
+                errors.ImageURL = "Player image is required"
                 toastr.error("Player image is required")
             }
             if (_.isEmpty(errors)) {
                 toastr.success("Create new player success")
                 dispatch(createNewPlayerAction(values))
-                console.log("value1", values);
+                formik.resetForm()
+                console.log("player", values);
             }
 
         }
@@ -64,21 +70,12 @@ export default function CreatePlayer() {
                                         <label htmlFor='Name' className='form__label'>Player Name</label>
 
                                     </div>
-                                    <div className='form form-group'>
+                                    {/* <div className='form form-group'>
                                         <input type="text" id="ImageURL" className="form__input" autoComplete="off" placeholder=" "
                                             onChange={formik.handleChange}
                                             onBlur={formik.handleBlur}
                                             value={formik.values.ImageURL} />
                                         <label htmlFor='Name' className='form__label'>Player Image</label>
-
-                                    </div>
-                                    {/* <div className='form form-group'>
-                                        <input type="text" id="DateOfBirth" className="form__input" autoComplete="off" placeholder=" "
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                            value={moment(formik.values.DateOfBirth).format('DD-MM-yyyy')} />
-                                        <DatePicker dateFormat="yyyy-dd-MM" id='DateOfBirth' wrapperClassName="picker" autoComplete='off' placeholder=" " selected={startDate} onChange={(date) => setStartDate(date)} />
-                                        <label htmlFor='picker' className='form__label'>Date of Birth</label>
 
                                     </div> */}
                                     <div className='form form-group'>
@@ -87,6 +84,10 @@ export default function CreatePlayer() {
                                             onBlur={formik.handleBlur}
                                             value={formik.values.DateOfBirth} />
                                         <label htmlFor='DateOfBirth' className='form__label'>Date of Birth</label>
+
+                                    </div>
+                                    <div className='form form-group'>
+                                        <UploadFile getFileCallBack={FileCallBackFunction} className="form__input" />
 
                                     </div>
                                     <button type='submit' className='btn btn-success'>Create</button>
