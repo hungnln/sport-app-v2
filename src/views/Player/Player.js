@@ -47,9 +47,10 @@ export default function Player() {
                                 <thead>
                                     <tr>
                                         <th className="border-0">Mã</th>
+                                        <th className='border-0'>Hình ảnh</th>
                                         <th className="border-0">Cầu thủ</th>
-                                        <th className='border-0'>Thể loại</th>
-                                        <th className='border-0'>Đội</th>
+                                        {/* <th className='border-0'>Thể loại</th>
+                                        <th className='border-0'>Đội</th> */}
                                         <th>Tùy chỉnh</th>
                                     </tr>
                                 </thead>
@@ -57,12 +58,14 @@ export default function Player() {
                                     {_.orderBy(listPlayers, ['id'], ['asc'])?.map((player, index) => {
                                         return <tr>
                                             <td>{player.id}</td>
+                                            <td><img src={player.imageURL} style={{ width: 100, height: 100, borderRadius: '50%' }}></img></td>
                                             <td>{player.name}</td>
-                                            <td>Tiền đạo</td>
+                                            <td></td>
+                                            {/* <td>Tiền đạo</td>
                                             <td>
                                                 <img className='club__logo' src="//ssl.gstatic.com/onebox/media/sports/logos/RWDf-QvHoH_l50a-SLFQ7A_48x48.png" alt="Team Logo" />
                                                 <span className='club__name'>TP.HCM</span>
-                                            </td>
+                                            </td> */}
                                             <td className='d-flex'><UpdatePlayer {...player} /> <DeletePlayer {...player} /></td>
                                         </tr>
                                     })}
