@@ -18,13 +18,16 @@
 import React, { Component, Fragment, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
-
+import _ from 'lodash'
 import routes from "routes.js";
 import Notifications from "views/Notifications";
 import { toastr } from "react-redux-toastr";
+import { useSelector } from "react-redux";
+import { loginAction } from "redux/actions/UserManageAction";
 
 function Header() {
   const [component, setComponent] = useState("")
+  const { userLogin1 } = useSelector(rootReducer => rootReducer.UserManageReducer)
   const location = useLocation();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
@@ -37,7 +40,23 @@ function Header() {
     };
     document.body.appendChild(node);
   };
+  const checkLogin = () => {
+    if (_.isEmpty(userLogin1)) {
+      return <NavLink
+        className="m-0"
+        to={'/login'}
+      >
+        <span className="no-icon">Login</span>
+      </NavLink>
 
+    }
+    return <NavLink
+      className="m-0"
+      to={''}
+    >
+      <span className="no-icon">{userLogin1.name}</span>
+    </NavLink>
+  }
   const getBrandText = () => {
     for (let i = 0; i < routes.length; i++) {
       if (location.pathname.indexOf(routes[i].path) !== -1) {
@@ -147,15 +166,10 @@ function Header() {
             </Nav>
             <Nav className="ml-auto" navbar>
               <Nav.Item>
-                <Nav.Link
-                  className="m-0"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <span className="no-icon">Account</span>
-                </Nav.Link>
+
+                {checkLogin()}
               </Nav.Item>
-              <Dropdown as={Nav.Item}>
+              {/* <Dropdown as={Nav.Item}>
                 <Dropdown.Toggle
                   aria-expanded={false}
                   aria-haspopup={true}
@@ -200,8 +214,8 @@ function Header() {
                     Separated link
                   </Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
-              <Nav.Item>
+              </Dropdown> */}
+              {/* <Nav.Item>
                 <Nav.Link
                   className="m-0"
                   href="#pablo"
@@ -209,15 +223,15 @@ function Header() {
                 >
                   <span className="no-icon">Log out</span>
                 </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
+              </Nav.Item> */}
+              {/* <Nav.Item>
                 <Nav.Link
                   className="m-0"
                   href="#pablo"
                   onClick={(e) => e.preventDefault()}
                 >
                 </Nav.Link>
-              </Nav.Item>
+              </Nav.Item> */}
             </Nav>
           </Navbar.Collapse>
         </Container>
