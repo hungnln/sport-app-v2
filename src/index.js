@@ -48,7 +48,7 @@ ReactDOM.render(
         <Redirect from="/admin" exact to="/admin/dashboard" />
         <Route path="/user" render={(props) => <User {...props} />} />
         {/* <AdminTemplate path="/icons" exact Component={Icons} /> */}
-        <Redirect from="/" to="/admin/dashboard" />
+        {/* <Redirect from="/" to="/admin/dashboard" /> */}
         <Route path="/login" render={(props) => <Login {...props} />} />
         <Route path="/register" render={(props) => <Register {...props} />} />
 
